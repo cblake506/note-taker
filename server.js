@@ -38,7 +38,7 @@ app.post("/api/notes", (req, res) => {
   res.json(noteList);
 })
 
-app.delete(".api/notes/:id", (req, res) => {
+app.delete("/api/notes/:id", (req, res) => {
   const id = req.params.id;
 
   noteList = noteList.filter(notes => notes.id != id);
