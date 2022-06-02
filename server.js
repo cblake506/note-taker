@@ -8,27 +8,22 @@ const PORT = process.env.PORT || 3001 ;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-app.use(express.static(path.join(__dirname, "./public")));
-
-app.get("/", (req, res) => 
-  res.sendFile(path.join(__dirname, "./Develop/public/index.html"))
-);
+app.use(express.static(path.join(__dirname, "./Develop/public")));
 
 app.get("/notes", (req, res) => 
   res.sendFile(path.join(__dirname, "./Develop/public/notes.html"))
-);
-
-app.get("/api/notes", (req,res) => 
-  {res.json(noteList)}
 );
 
 app.get("*", (req, res) => 
   res.sendFile(path.join(__dirname, "./Develop/public/index.html"))
 );
 
+app.get("/api/notes", (req,res) => 
+  {res.json(noteList)}
+);
+
 app.post("/api/notes", (req, res) => {
-  //random id number for note
+  //random id number for each note. Possible for certain ids to overlap.
   req.body.id = Math.floor((Math.random() * 10000));
   let newNote = req.body;
 
@@ -36,13 +31,13 @@ app.post("/api/notes", (req, res) => {
 
   fs.writeFileSync("./Develop/db/db.json", JSON.stringify(noteList));
   res.json(noteList);
-})
+});
 
 app.delete("/api/notes/:id", (req, res) => {
   const id = req.params.id;
 
+  //remove the notes that correspond to the id of the note desired to be deleted from the list
   noteList = noteList.filter(notes => notes.id != id);
-
   fs.writeFileSync("./Develop/db/db.json", JSON.stringify(noteList));
   res.json(noteList);
 })
