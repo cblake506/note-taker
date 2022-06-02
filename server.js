@@ -12,11 +12,11 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "./public")));
 
 app.get("/", (req, res) => 
-  res.sendFile(path.join(__dirname, "./public/index.html"))
+  res.sendFile(path.join(__dirname, "./Develop/public/index.html"))
 );
 
 app.get("/notes", (req, res) => 
-  res.sendFile(path.join(__dirname, "./public/notes.html"))
+  res.sendFile(path.join(__dirname, "./Develop/public/notes.html"))
 );
 
 app.get("/api/notes", (req,res) => 
@@ -24,7 +24,7 @@ app.get("/api/notes", (req,res) =>
 );
 
 app.get("*", (req, res) => 
-  res.sendFile(path.join(__dirname, "./public/index.html"))
+  res.sendFile(path.join(__dirname, "./Develop/public/index.html"))
 );
 
 app.post("/api/notes", (req, res) => {
@@ -34,16 +34,16 @@ app.post("/api/notes", (req, res) => {
 
   noteList.push(newNote);
 
-  fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+  fs.writeFileSync("./Develop/db/db.json", JSON.stringify(noteList));
   res.json(noteList);
 })
 
-app.delete("/api/notes/:id", (req, res) => {
+app.delete(".api/notes/:id", (req, res) => {
   const id = req.params.id;
 
   noteList = noteList.filter(notes => notes.id != id);
 
-  fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+  fs.writeFileSync("./Develop/db/db.json", JSON.stringify(noteList));
   res.json(noteList);
 })
 
